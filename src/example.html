@@ -1,4 +1,6 @@
 <head>
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/141.0.0/purecloud-platform-client-v2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/scripts/example.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/example.css">
 </head>
@@ -17,7 +19,10 @@
                 <h4 class="actionName">Click-to-Dial</h4>
                 <p>You can raise events from the main application to automatically place a call using the embedded client. <a id='clickToDial' >3172222222</a> </p>
             </div>
-
+            <div class="action">
+                <h4 class="actionName">Click-to-Email</h4>
+                <p>You can raise events from the main application to automatically place a call using the embedded client. <a id='clickToEmail' >shane.garner@genesys.com</a> </p>
+            </div>
             <div class="action">
                 <h4 class="actionName">Add Associations</h4>
                 <p>addAssociation allows you to update options for Name or Related To fields in the Interaction Log view. The selected option is sent to the embeddable framework when processCallLog is raised.</p>
@@ -44,7 +49,7 @@
                 <p>contactSearch allows you to define which contacts the integration returns from an external CRM when agents search for names or phone numbers before making calls or transferring interactions.</p>
                 <textarea id="contactSearchPayload" rows="4">[{"type": "external", "name": "Weather Line", "phone":[{ "number":"(317) 222-2222", "label":"Cell"}]}]</textarea>
             </div>
-            
+
             <div class="action">
                 <h4 class="actionName">Update User Status</h4>
                 <p>User.updateStatus allows status management between PureCloud and third-party systems.</p>
@@ -55,7 +60,7 @@
                   </select>
                 <button id="updateUserStatus">Send Data</button>
             </div>
-            
+
             <div class="action">
                 <h4 class="actionName">Set User View</h4>
                 <p>User.setView sets the embedded client to a specific view when a user creates an interaction (makes a call, sends an email, or sends an SMS message). Available views: interactionList, callLog, newInteraction, callback, settings.</p>
@@ -125,7 +130,7 @@
             <div class="event">
                     <h4 class="eventName">Screen Pop</h4>
                     <p>screenPop is raised for inbound alerting interactions.</p>
-                    <textarea id="screenPopPayload" rows="5"></textarea>        
+                    <textarea id="screenPopPayload" rows="5"></textarea>
             </div>
 
             <div class="event">
@@ -147,18 +152,18 @@
             <div class="subscription">
                 <h4 class="subscriptionName">Type: Interaction</h4>
                 <p>Subscribing to Interaction events allows you to make smart decisions based on an interaction's life cycle.</p>
-                <textarea id="interactionSubscriptionPayload" rows="5"></textarea>        
+                <textarea id="interactionSubscriptionPayload" rows="5"></textarea>
             </div>
 
             <div class="subscription">
                 <h4 class="subscriptionName">Type: UserAction</h4>
                 <p>Subscribing to UserAction events allows you to align the agent's interface outside of the embeddable framework with their current task.</p>
-                <textarea id="userActionSubscriptionPayload" rows="5"></textarea>        
+                <textarea id="userActionSubscriptionPayload" rows="5"></textarea>
             </div>
             <div class="subscription">
                 <h4 class="subscriptionName">Type: Notification</h4>
                 <p>Subscribing to Notification events allows contextual information such as when an interaction selection changed.</p>
-                <textarea id="notificationSubscriptionPayload" rows="5"></textarea>        
+                <textarea id="notificationSubscriptionPayload" rows="5"></textarea>
             </div>
         </div>
 
