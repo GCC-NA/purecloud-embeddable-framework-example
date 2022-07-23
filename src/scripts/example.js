@@ -1,6 +1,18 @@
+const platformClient = require('platformClient');
+
 document.addEventListener('DOMContentLoaded',function(){
-    
+    const client = platformClient.ApiClient.instance;
+    let loginData;
+    client.loginImplicitGrant("31e8192e-21e1-4f5c-9463-f4567fc83373", "https://localhost/example.html")
+        .then((data) => {
+            loginData = data;
+        })
+        .catch((err) => {
+            // Handle failure response
+            console.log(err);
+        });
     document.getElementById("clickToDial").addEventListener("click", clickToDial);
+    document.getElementById("clickToEmail").addEventListener("click", clickToEmail);
     document.getElementById("addAssociation").addEventListener("click", addAssociation);
     document.getElementById("addAttribute").addEventListener("click", addAttribute);
     document.getElementById('addTransferContext').addEventListener("click", addTransferContext);
@@ -12,7 +24,7 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('muteInteraction').addEventListener("click", updateInteractionState);
     document.getElementById('updateAudioConfiguration').addEventListener("click", updateAudioConfiguration);
     document.getElementById('sendCustomNotification').addEventListener("click", sendCustomNotification);
-    
+
     document.getElementById('view-interactionList').addEventListener("click", setView);
     document.getElementById('view-calllog').addEventListener("click", setView);
     document.getElementById('view-newInteraction').addEventListener("click", setView);
@@ -48,6 +60,12 @@ document.addEventListener('DOMContentLoaded',function(){
             data: { number: '3172222222', autoPlace: true }
         }), "*");
     }
+    function clickToEmail() {
+        console.log('process click to email');
+        // document.getElementById("softphone").contentWindow.postMessage(JSON.stringify({
+        //     type: 'clickToDial',
+        //     data: { address: 'shane.garner@genesys.com', type: 'email', autoPlace: true }
+        // }), "*");
 
         let conversationApiInstance = new platformClient.ConversationsApi();
                 const body = {
@@ -166,7 +184,7 @@ document.addEventListener('DOMContentLoaded',function(){
     function setView(event) {
         console.log('process view update');
         let payload = {
-            type:"main", 
+            type:"main",
             view: {
                 name:event.target.outerText
             }
@@ -181,7 +199,7 @@ document.addEventListener('DOMContentLoaded',function(){
         console.log('Send Custom User Notification');
         var payload = {
             message: document.getElementById('customNotificationMessage').value,
-            type: document.getElementById('notificationType').value,  
+            type: document.getElementById('notificationType').value,
             timeout: document.getElementById('notificationTimeout').value
         };
         document.getElementById("softphone").contentWindow.postMessage(JSON.stringify({
