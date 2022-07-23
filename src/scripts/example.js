@@ -62,47 +62,41 @@ document.addEventListener('DOMContentLoaded',function(){
     }
     function clickToEmail() {
         console.log('process click to email');
-        // document.getElementById("softphone").contentWindow.postMessage(JSON.stringify({
-        //     type: 'clickToDial',
-        //     data: { address: 'shane.garner@genesys.com', type: 'email', autoPlace: true }
-        // }), "*");
-
         let conversationApiInstance = new platformClient.ConversationsApi();
-                const body = {
-                    "queueId": "60e328d1-60ed-43e4-8d5c-2286dad98b68",
-                    "toAddress": "shane@garnercrew.com",
-                    "toName": "Shane Garner",
-                    "direction": "OUTBOUND",
-                    "textBody": "Hey now again from EF",
-                    "subject": "Api Email EF"
-                };
-                conversationApiInstance.postConversationsEmails(body)
-                    .then((emailRespData) => {
-                        console.log(`postConversationsEmails success! data: ${JSON.stringify(emailRespData, null, 2)}`);
-                        fetch('https://localhost/assets/Genesys.pdf')
-                            .then(res => res.blob())
-                            .then(blob => {
-                                const fd = new FormData();
-                                fd.append('conversationId', emailRespData.id);
-                                fd.append('file', new File([blob], 'Genesys.pdf'));
-                                axios.post('https://apps.mypurecloud.com/uploads/postino-attachments', fd,
-                                    {
-                                        headers: {
-                                            'Authorization': 'Bearer ' + loginData.accessToken,
-                                            'Content-Type': 'multipart/form-data'
-                                        }
-                                    })
-                                    .then(res => console.log("done uploading attachment" + JSON.stringify(res)))
-                                    .catch((err) => {
-                                        // Handle failure response
-                                        console.log("error with axios", err);
-                                    });
+        const body = {
+            "queueId": "60e328d1-60ed-43e4-8d5c-2286dad98b68",
+            "toAddress": "shane@garnercrew.com",
+            "toName": "Shane Garner",
+            "direction": "OUTBOUND",
+            "textBody": "Hey now again from EF",
+            "subject": "Api Email EF"
+        };
+        conversationApiInstance.postConversationsEmails(body)
+            .then((emailRespData) => {
+                fetch('https://localhost/assets/Genesys.pdf')
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const fd = new FormData();
+                        fd.append('conversationId', emailRespData.id);
+                        fd.append('file', new File([blob], 'Genesys.pdf'));
+                        axios.post('https://apps.mypurecloud.com/uploads/postino-attachments', fd,
+                            {
+                                headers: {
+                                    'Authorization': 'Bearer ' + loginData.accessToken,
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then(res => console.log("done uploading attachment" + JSON.stringify(res)))
+                            .catch((err) => {
+                                // Handle failure response
+                                console.log("error with attaching to email", err);
                             });
-                    })
-                    .catch((err) => {
-                        console.log('There was a failure calling postConversationsEmails');
-                        console.error(err);
                     });
+            })
+            .catch((err) => {
+                console.log('There was a failure calling postConversationsEmails');
+                console.error(err);
+            });
 
     }
     function addAssociation() {
