@@ -65,11 +65,12 @@ document.addEventListener('DOMContentLoaded',function(){
         let conversationApiInstance = new platformClient.ConversationsApi();
         const body = {
             "queueId": "60e328d1-60ed-43e4-8d5c-2286dad98b68",
-            "toAddress": "shane@garnercrew.com",
+            "toAddress": "shane.garner@genesys.com",
             "toName": "Shane Garner",
             "direction": "OUTBOUND",
-            "textBody": "Hey now again from EF",
-            "subject": "Api Email EF"
+            "subject": "Your claim has been filed",
+            "textBody": "",
+            "attributes":{"claimNumber": "1234", "customerFirstName": "Shane", "customerLastName": "Garner"}
         };
         conversationApiInstance.postConversationsEmails(body)
             .then((emailRespData) => {
